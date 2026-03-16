@@ -380,7 +380,8 @@ const getDocTypeColor = (type) => {
 }
 
 const viewDocument = (id) => {
-  router.push(`/document-detail/${id}`)
+  const url = router.resolve({ path: `/document-detail/${id}` }).href
+  window.open(url, '_blank')
 }
 
 // 计算属性：当前选中的实验室（接口字段：labName, labNumber, location, capacity, area, status）

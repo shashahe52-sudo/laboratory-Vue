@@ -242,7 +242,8 @@ const handleQuickAction = (key) => {
 }
 
 const viewNotice = (id) => {
-  router.push(`/notice-detail/${id}`)
+  const url = router.resolve({ path: `/notice-detail/${id}` }).href
+  window.open(url, '_blank')
 }
 
 const getStatusColor = (status) => {

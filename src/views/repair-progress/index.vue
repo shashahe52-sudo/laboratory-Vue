@@ -77,6 +77,10 @@
             </a-tag>
           </template>
 
+          <template v-else-if="column.key === 'issueType'">
+            {{ getIssueTypeText(record.issueType) }}
+          </template>
+
           <template v-else-if="column.key === 'actions'">
             <a-dropdown>
               <a-button type="link" size="small">
@@ -106,8 +110,8 @@
       <div v-if="selectedRepair" class="repair-detail">
         <a-descriptions :column="2" bordered>
           <a-descriptions-item label="报修单号">{{ selectedRepair.recordNo }}</a-descriptions-item>
-          <a-descriptions-item label="问题类型">{{ selectedRepair.issueType }}</a-descriptions-item>
-          <a-descriptions-item label="报修人">{{ selectedRepair.reporterName }}</a-descriptions-item>
+          <a-descriptions-item label="问题类型">{{ getIssueTypeText(selectedRepair.issueType) }}</a-descriptions-item>
+          <a-descriptions-item label="用户名">{{ selectedRepair.reporterName }}</a-descriptions-item>
           <a-descriptions-item label="报修时间">{{ selectedRepair.createTime }}</a-descriptions-item>
           <a-descriptions-item label="状态">
             <a-tag :color="getStatusColor(selectedRepair.status)">
@@ -269,6 +273,16 @@ const getStatusText = (status) => {
     3: '无需维护'
   }
   return textMap[status] || '未知'
+}
+
+const getIssueTypeText = (type) => {
+  const map = {
+    clean: '清洁',
+    repair: '维修',
+    accident: '事故',
+    other: '其他'
+  }
+  return map[type] || '未知'
 }
 
 const handleFilter = () => {
