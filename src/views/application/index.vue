@@ -18,13 +18,16 @@
           </a-form-item>
         </template>
 
-        <a-form-item v-if="formData.usageType === 'course'" label="课程名称" name="courseName">
+        <template v-if="formData.usageType === 'course' && formData.applicationType==='lab' ">
+          <a-form-item  label="课程名称" name="courseName">
           <a-input v-model:value="formData.courseName" placeholder="请输入课程名称" />
         </a-form-item>
 
-        <a-form-item v-if="formData.usageType === 'course'" label="班级" name="className">
+        <a-form-item label="班级" name="className">
           <a-input v-model:value="formData.className" placeholder="请输入班级" />
         </a-form-item>
+        </template>
+        
 
         <!-- 申请实验室时的表单 -->
         <template v-if="formData.applicationType === 'lab'">
@@ -155,26 +158,30 @@
     </a-card>
 
     <!-- 设备信息卡片 -->
-    <a-card v-if="formData.applicationType === 'equipment' && selectedEquipment" title="设备信息" class="equipment-info-card">
+    <a-card v-if="formData.applicationType === 'equipment' && selectedEquipment" title="申请信息" class="equipment-info-card">
       <div class="equipment-info">
-        <a-descriptions :column="1" size="small">
+        <a-descriptions :column="2" size="small">
+            <a-descriptions-item label="所在实验室">
+            {{ selectedLab?.labName }}
+          </a-descriptions-item>
           <a-descriptions-item label="设备名称">
-            {{ selectedEquipment.name }}
+            {{ selectedEquipment.equipmentName }}
           </a-descriptions-item>
-          <a-descriptions-item label="型号">
-            {{ selectedEquipment.model }}
+          <a-descriptions-item label="可用数量"> {{ selectedEquipment.count }} 台 </a-descriptions-item>
+          <a-descriptions-item label="借用数量">
+           {{ formData.participantCount }}
           </a-descriptions-item>
-          <a-descriptions-item label="可用数量"> {{ selectedEquipment.quantity }} 台 </a-descriptions-item>
-          <a-descriptions-item label="当前状态">
-            <a-tag :color="getEquipmentStatusColor(selectedEquipment.status)">
-              {{ getEquipmentStatusText(selectedEquipment.status) }}
-            </a-tag>
+          <a-descriptions-item label="使用目的">
+            {{formData.purpose }}
           </a-descriptions-item>
-          <a-descriptions-item label="存放位置">
-            {{ selectedEquipment.location }}
+           <a-descriptions-item label="特殊要求">
+            {{ formData.specialRequirements || '无' }}
           </a-descriptions-item>
-          <a-descriptions-item label="负责人">
-            {{ selectedEquipment.manager }}
+          <a-descriptions-item label="联系方式">
+            {{ formData.contactInfo }}
+          </a-descriptions-item>
+          <a-descriptions-item label="使用时间">
+            {{ formData.timeRange?.[0]?.format('YYYY-MM-DD HH:mm') }} 至 {{formData.timeRange?.[1]?.format('YYYY-MM-DD HH:mm') }}
           </a-descriptions-item>
         </a-descriptions>
       </div>

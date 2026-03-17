@@ -45,15 +45,6 @@
               :prefix="h(LockOutlined)" />
           </a-form-item>
 
-          <a-form-item name="agreement">
-            <a-checkbox v-model:checked="formData.agreement">
-              我已阅读并同意
-              <a @click="showAgreement">《用户协议》</a>
-              和
-              <a @click="showPrivacy">《隐私政策》</a>
-            </a-checkbox>
-          </a-form-item>
-
           <a-form-item>
             <a-button type="primary" html-type="submit" size="large" :loading="loading" class="register-button" block>
               注册 </a-button>
@@ -203,14 +194,6 @@ const handleRegister = async () => {
 
 const goToLogin = () => {
   router.push('/login')
-}
-
-const showAgreement = () => {
-  message.info('用户协议功能开发中...')
-}
-
-const showPrivacy = () => {
-  message.info('隐私政策功能开发中...')
 }
 </script>
 
